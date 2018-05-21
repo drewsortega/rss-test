@@ -47,7 +47,12 @@ io.on('connection', function(socket){1
         xml2js.parseString(body, function(err, res2){
           //console.log(res2.rss.channel[0].item[0].title[0] + "\n" + res2.rss.channel[0].item[0].description[0] + "\n" + res2.rss.channel[0].item[0].link[0]);
           //console.log(res2.rss.channel[0].item[0]);
-          feeds = feeds.concat(res2.rss.channel[0].item);
+
+          if(!err && res2.rss.channel[0].item[0].hasOwnProperty('title') &&
+                  res2.rss.channel[0].item[0].hasOwnProperty('description') &&
+                  res2.rss.channel[0].item[0].hasOwnProperty('link')){
+            feeds = feeds.concat(res2.rss.channel[0].item);
+          }
           if(completed == numLinks){
             io.emit('load-feed', { feeds : feeds });
           }
@@ -107,12 +112,40 @@ app.get('/', function(req, res, next){
 });
 
 app.post('/', function(req, res){
-  var newLink = new Link();
-  newLink.url = req.body.url;
-  newLink.save(function(err) {
-    if(err)
-      throw err;
+  var all_err;
+  const options = {
+      url: req.body.url,
+      method: 'GET',
+      headers: {
+          'Accept': 'application/json',
+          'Accept-Charset': 'utf-8',
+      }
+  };
+  request(options, function(err, res1, body){
+    if(err){
+      all_err = err
+    }else{
+      xml2js.parseString(body, function(err2, res2){
+        if(err){
+          all_err = err2;
+        }else{
+          if(!res2.rss.channel[0].item[0].hasOwnProperty('title') ||
+                  !res2.rss.channel[0].item[0].hasOwnProperty('description') ||
+                  !res2.rss.channel[0].item[0].hasOwnProperty('link')){
+            all_err = 1;
+          }
+        }
+      });
+    }
   });
+  if(!all_err){
+    var newLink = new Link();
+    newLink.url = req.body.url;
+    newLink.save(function(err) {
+      if(err)
+        throw err;
+    });
+  }
   res.redirect('/');
 });
 
