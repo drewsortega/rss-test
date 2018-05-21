@@ -12,10 +12,17 @@
     <form action="/" method="post">
         <div class="form-group">
           <label>Link</label>
-          <input type="text" class="form-control" name="alias">
+          <input type="text" class="form-control" name="url">
         </div>
         <button type="submit" class="btn btn-warning btn-lg">Add</button>
-</form>
+    </form>
+    <h2>List:</h2>
+    <% for(let i = 0; i < links.length; i++) { %>
+        <article>
+            <h3><a href=<%= links[i].link[0] %>><%= links[i].title[0] %></a></h3>
+            <p><%= links[i].description[0] %></p>
+        </article>
+    <% } %>
   </header>
 </body>
 </html>
