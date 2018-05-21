@@ -1,0 +1,25 @@
+{
+  "name": "rss-test",
+  "version": "1.0.0",
+  "description": "An RSS feed test page",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drewsortega/rss-test.git"
+  },
+  "author": "Drew S Ortega",
+  "license": "GPLv3",
+  "bugs": {
+    "url": "https://github.com/drewsortega/rss-test/issues"
+  },
+  "homepage": "https://github.com/drewsortega/rss-test#readme",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "request": "^2.86.0",
+    "xml2js": "^0.4.19"
+  }
+}
