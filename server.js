@@ -19,7 +19,7 @@ app.get('/', function(req, res, next){
   res.render('index.ejs');
 });
 
-io.on('connection', function(socket){
+io.on('connection', function(socket){1
   console.log('a user connected');
   socket.on('disconnect', function(){
     console.log('user disconnected');
@@ -49,7 +49,7 @@ io.on('connection', function(socket){
           //console.log(res2.rss.channel[0].item[0]);
           feeds = feeds.concat(res2.rss.channel[0].item);
           if(completed == numLinks){
-            io.emit('load-feed', { feeds : feeds })
+            io.emit('load-feed', { feeds : feeds });
           }
           //res.status(200).send(res2.rss.channel[0].item[0].title[0] + "\n" + res2.rss.channel[0].item[0].description[0] + "\n" +  res2.rss.channel[0].item[0].link[0]);
         });
