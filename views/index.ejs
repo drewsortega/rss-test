@@ -4,7 +4,8 @@
   <meta charset="utf-8">
   <title>RSS Test Page</title>
   <link rel="stylesheet" href="/css/style.css" media="screen">
-  <script src="/index.js" charset="utf-8" defer></script>
+  <script src="/js/index.js" charset="utf-8" defer></script>
+  <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
   <header>
@@ -16,13 +17,8 @@
         </div>
         <button type="submit" class="btn btn-warning btn-lg">Add</button>
     </form>
-    <h2>List:</h2>
-    <% for(let i = 0; i < feeds.length; i++) { %>
-        <article>
-            <h3><a href=<%= feeds[i].link[0] %>><%= feeds[i].title[0] %></a></h3>
-            <p><%- feeds[i].description[0] %></p>
-        </article>
-    <% } %>
   </header>
+  <div id="feed-container">
+  </div>
 </body>
 </html>
