@@ -17,10 +17,10 @@
         <button type="submit" class="btn btn-warning btn-lg">Add</button>
     </form>
     <h2>List:</h2>
-    <% for(let i = 0; i < links.length; i++) { %>
+    <% for(let i = 0; i < feeds.length; i++) { %>
         <article>
-            <h3><a href=<%= links[i].link[0] %>><%= links[i].title[0] %></a></h3>
-            <p><%= links[i].description[0] %></p>
+            <h3><a href=<%= feeds[i].link[0] %>><%= feeds[i].title[0] %></a></h3>
+            <p><%- feeds[i].description[0] %></p>
         </article>
     <% } %>
   </header>

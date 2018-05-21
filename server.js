@@ -29,7 +29,7 @@ app.get('/', function(req, res, next){
   Link.find().count(function(err, count){
     numLinks = count;
   });
-  var l = new Array();
+  var feeds = new Array();
   var cursor = Link.find().cursor();
   cursor.on('data', function(doc){
     const options = {
@@ -47,13 +47,9 @@ app.get('/', function(req, res, next){
         xml2js.parseString(body, function(err, res2){
           //console.log(res2.rss.channel[0].item[0].title[0] + "\n" + res2.rss.channel[0].item[0].description[0] + "\n" + res2.rss.channel[0].item[0].link[0]);
           //console.log(res2.rss.channel[0].item[0]);
-          l.push(res2.rss.channel[0].item[0]);
-
-          console.log(l[0].title[0]);
-          console.log(completed, '<', numLinks);
-
+          feeds = feeds.concat(res2.rss.channel[0].item);
           if(completed == numLinks){
-            res.render('index.ejs', { links: l});
+            res.render('index.ejs', { feeds: feeds});
           }
           //res.status(200).send(res2.rss.channel[0].item[0].title[0] + "\n" + res2.rss.channel[0].item[0].description[0] + "\n" +  res2.rss.channel[0].item[0].link[0]);
         });
